@@ -30,8 +30,9 @@ func flagOutCheck(flagOut *string) {
 //flag can only consist of several distinct options
 func flagLatCheck(flagLat *string) {
 	//check submitted flags
-	if *flagLat != "b" && *flagLat != "s" && *flagLat != "d" && *flagLat != "a" {
+	if *flagLat != "t" && *flagLat != "z" && *flagLat != "o" && *flagLat != "u" && *flagLat != "a" {
 		err := InputError{"-lat flag input malformed."}
+		fmt.Println(*flagLat)
 		fmt.Println(err)
 		panic(err)
 	}
