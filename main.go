@@ -7,12 +7,6 @@ import (
 	"time"
 )
 
-type InputError struct{ Errstr string }
-
-func (i *InputError) Error() string {
-	return i.Errstr
-}
-
 func rule110() []int {
 	return []int{0, 1, 1, 1, 0, 1, 1, 0}
 }
@@ -59,56 +53,6 @@ func flagGenCheck(gens *int) {
 	}
 }
 
-func InitLattice(ic string) *[]string {
-	lattice := []string{}
-
-	//apply initial condition
-	lattice = append(lattice, ic)
-
-	return &lattice
-}
-
-//toroidal
-func ParseRowToroid(row string) string {
-	out := ""
-	for i := 0; i < len(row); i++ {
-		leftdex, middex, ritdex := -1, -1, -1
-
-		if (i - 1) < 0 {
-			leftdex = len(row) - 1
-		} else {
-			leftdex = i - 1
-		}
-
-		middex = i
-
-		if (i + 1) >= len(row) {
-			ritdex = 0
-		} else {
-			ritdex = i + 1
-		}
-
-		//state of each neighbor
-		lef, lerr := strconv.Atoi(string(row[leftdex]))
-		mid, merr := strconv.Atoi(string(row[middex]))
-		rit, rerr := strconv.Atoi(string(row[ritdex]))
-		if lerr != nil {
-			panic(lerr)
-		}
-		if merr != nil {
-			panic(merr)
-		}
-		if rerr != nil {
-			panic(rerr)
-		}
-
-		state := 4*lef + 2*mid + 1*rit
-
-		out += strconv.Itoa(state)
-	}
-	return out
-}
-
 func main() {
 	//graph output - binary/state/domain/all
 	flagOut := flag.String("out", "b", "sets output parameters -(b)inary -(s)tate -(d)omain -(a)ll")
@@ -131,7 +75,8 @@ func main() {
 	//generate state ca and work off of that
 	lattice := InitLattice(*flagIc)
 	for i := 1; i < *flagGens; i++ {
-		*lattice = append(*lattice, ParseRowToroid((*lattice)[0]))
+		prevRow := (*lattice)[i-1]
+		*lattice = append(*lattice, ParseRowToroid(prevRow))
 	}
 
 	//output
@@ -139,9 +84,12 @@ func main() {
 	fmt.Println("Program Arguments")
 	fmt.Println("-out: " + *flagOut)
 	fmt.Println("-lat: " + *flagLat)
-	fmt.Println("-gens" + strconv.Itoa(*flagGens))
+	fmt.Println("-gens: " + strconv.Itoa(*flagGens))
 	fmt.Println("IC: " + *flagIc)
 	fmt.Println(time.Now())
-	fmt.Println(lattice)
 
+	for i := 0; i < len(*lattice); i++ {
+		fmt.Println((*lattice)[i])
+		fmt.Println("len: " + strconv.Itoa(len((*lattice)[i])))
+	}
 }
