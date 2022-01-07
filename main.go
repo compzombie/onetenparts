@@ -76,7 +76,18 @@ func main() {
 	lattice := InitLattice(*flagIc)
 	for i := 1; i < *flagGens; i++ {
 		prevRow := (*lattice)[i-1]
-		*lattice = append(*lattice, ParseRowToroid(prevRow))
+
+		switch *flagLat {
+		case "t":
+			*lattice = append(*lattice, ParseRowToroid(prevRow))
+		case "z":
+			*lattice = append(*lattice, ParseRowZeroEdge(prevRow))
+		case "o":
+		case "u":
+		case "a":
+		default:
+			*lattice = append(*lattice, "-")
+		}
 	}
 
 	//output
