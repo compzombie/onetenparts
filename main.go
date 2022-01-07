@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -16,20 +17,23 @@ func rule110() []int {
 	return []int{0, 1, 1, 1, 0, 1, 1, 0}
 }
 
-func flgoutCheck(flgout *string) {
+//flag can only consist of several distinct options
+func flagOutCheck(flgout *string) {
 	//check submitted flags
 	if *flgout != "b" && *flgout != "s" && *flgout != "d" && *flgout != "a" {
 		panic(InputError{"-out flag input malformed."})
 	}
 }
 
-func flglatCheck(flgout *string) {
+//flag can only consist of several distinct options
+func flagLatCheck(flgout *string) {
 	//check submitted flags
 	if *flgout != "b" && *flgout != "s" && *flgout != "d" && *flgout != "a" {
 		panic(InputError{"-out flag input malformed."})
 	}
 }
 
+//an ic can only consist of <0>'s and <1>'s
 func icCheck(ic string) {
 	for i := 0; i < len(ic); i++ {
 		cell := ic[i]
@@ -39,26 +43,47 @@ func icCheck(ic string) {
 	}
 }
 
+//gens must be greater than 0 and a valid integer
+func flagGenCheck(gens *int) {
+	if *gens <= 0 {
+		panic(InputError{"gen must be greater than 0 and a valid integer"})
+	}
+}
+
+func InitLattice(size int, ic []string) *[][]string {
+	lattice := [][]string{}
+
+	//apply initial condition
+	lattice = append(lattice, ic)
+
+	return &lattice
+}
+
 func main() {
 	//graph output - binary/state/domain/all
-	flgout := flag.String("out", "b", "sets output parameters -(b)inary -(s)tate -(d)omain -(a)ll")
+	flagOut := flag.String("out", "b", "sets output parameters -(b)inary -(s)tate -(d)omain -(a)ll")
 
 	//lattice - toroidal, zero edged, 1 edged, unbounded
-	flglat := flag.String("lat", "t", "sets lattice properties -(t)oroidal -(z)ero-edged -(o)ne-edged -(u)nbounded -(a)ll")
+	flagLat := flag.String("lat", "t", "sets lattice properties -(t)oroidal -(z)ero-edged -(o)ne-edged -(u)nbounded -(a)ll")
+
+	//number of generations to compute
+	flagGen := flag.Int("gens", 10, "sets number of generations to compute before stopping")
 	flag.Parse()
 
 	//initial conditions are a string of 1's and 0's
 	ic := flag.Args()[0]
 
-	flgoutCheck(flgout)
-	flglatCheck(flglat)
+	flagOutCheck(flagOut)
+	flagLatCheck(flagLat)
+	flagGenCheck(flagGen)
 	icCheck(ic)
 
 	//generate state ca and work off of that
 
 	fmt.Println("Program Arguments")
-	fmt.Println("-out: " + *flgout)
-	fmt.Println("-lat: " + *flglat)
+	fmt.Println("-out: " + *flagOut)
+	fmt.Println("-lat: " + *flagLat)
+	fmt.Println("-gens" + strconv.Itoa(*flagGen))
 	fmt.Println("IC: " + flag.Args()[0])
 	fmt.Println(time.Now())
 }
