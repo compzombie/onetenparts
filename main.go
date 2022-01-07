@@ -21,7 +21,8 @@ func rule110() []int {
 func flagOutCheck(flgout *string) {
 	//check submitted flags
 	if *flgout != "b" && *flgout != "s" && *flgout != "d" && *flgout != "a" {
-		panic(InputError{"-out flag input malformed."})
+		err := InputError{"-out flag input malformed."}
+		panic(err)
 	}
 }
 
@@ -29,7 +30,8 @@ func flagOutCheck(flgout *string) {
 func flagLatCheck(flgout *string) {
 	//check submitted flags
 	if *flgout != "b" && *flgout != "s" && *flgout != "d" && *flgout != "a" {
-		panic(InputError{"-out flag input malformed."})
+		err := InputError{"-out flag input malformed."}
+		panic(err)
 	}
 }
 
@@ -38,7 +40,8 @@ func icCheck(ic string) {
 	for i := 0; i < len(ic); i++ {
 		cell := ic[i]
 		if cell != '0' && cell != '1' {
-			panic(InputError{"-out flag input malformed."})
+			err := InputError{"-out flag input malformed."}
+			panic(err)
 		}
 	}
 }
@@ -46,7 +49,8 @@ func icCheck(ic string) {
 //gens must be greater than 0 and a valid integer
 func flagGenCheck(gens *int) {
 	if *gens <= 0 {
-		panic(InputError{"gen must be greater than 0 and a valid integer"})
+		err := InputError{"gen must be greater than 0 and a valid integer"}
+		panic(err)
 	}
 }
 
