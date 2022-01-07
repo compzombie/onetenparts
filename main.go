@@ -83,6 +83,7 @@ func main() {
 		case "z":
 			*lattice = append(*lattice, ParseRowZeroEdge(prevRow))
 		case "o":
+			*lattice = append(*lattice, ParseRowOneEdge(prevRow))
 		case "u":
 		case "a":
 		default:
@@ -91,6 +92,12 @@ func main() {
 	}
 
 	//output
+	switch *flagOut {
+	case "b":
+	case "s":
+	case "d":
+	case "a":
+	}
 
 	fmt.Println("Program Arguments")
 	fmt.Println("-out: " + *flagOut)
