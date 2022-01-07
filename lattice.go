@@ -1,6 +1,8 @@
 package main
 
-import "strconv"
+import (
+	"strconv"
+)
 
 func InitLattice(ic string) *[]string {
 	lattice := []string{}
@@ -45,7 +47,7 @@ func ParseRowToroid(row string) string {
 			panic(rerr)
 		}
 
-		state := 4*lef + 2*mid + 1*rit
+		state := 4*Rule110()[lef] + 2*Rule110()[mid] + 1*Rule110()[rit]
 
 		out += strconv.Itoa(state)
 	}

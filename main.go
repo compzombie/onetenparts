@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func rule110() []int {
+func Rule110() []int {
 	return []int{0, 1, 1, 1, 0, 1, 1, 0}
 }
 
@@ -88,8 +88,9 @@ func main() {
 	fmt.Println("IC: " + *flagIc)
 	fmt.Println(time.Now())
 
+	//fmt.Println(len(*lattice))
 	for i := 0; i < len(*lattice); i++ {
 		fmt.Println((*lattice)[i])
-		fmt.Println("len: " + strconv.Itoa(len((*lattice)[i])))
+		//fmt.Println("len: " + strconv.Itoa(len((*lattice)[i])))
 	}
 }
