@@ -18,9 +18,9 @@ func rule110() []int {
 }
 
 //flag can only consist of several distinct options
-func flagOutCheck(flgout *string) {
+func flagOutCheck(flagOut *string) {
 	//check submitted flags
-	if *flgout != "b" && *flgout != "s" && *flgout != "d" && *flgout != "a" {
+	if *flagOut != "b" && *flagOut != "s" && *flagOut != "d" && *flagOut != "a" {
 		err := InputError{"-out flag input malformed."}
 		fmt.Println(err)
 		panic(err)
@@ -28,10 +28,10 @@ func flagOutCheck(flgout *string) {
 }
 
 //flag can only consist of several distinct options
-func flagLatCheck(flgout *string) {
+func flagLatCheck(flagLat *string) {
 	//check submitted flags
-	if *flgout != "b" && *flgout != "s" && *flgout != "d" && *flgout != "a" {
-		err := InputError{"-out flag input malformed."}
+	if *flagLat != "b" && *flagLat != "s" && *flagLat != "d" && *flagLat != "a" {
+		err := InputError{"-lat flag input malformed."}
 		fmt.Println(err)
 		panic(err)
 	}
@@ -42,7 +42,7 @@ func flagIcCheck(ic string) {
 	for i := 0; i < len(ic); i++ {
 		cell := ic[i]
 		if cell != '0' && cell != '1' {
-			err := InputError{"-out flag input malformed."}
+			err := InputError{"-ic flag input malformed."}
 			fmt.Println(err)
 			panic(err)
 		}
@@ -122,22 +122,13 @@ func main() {
 	flagIc := flag.String("ic", "00000100000", "initial condition of ca")
 	flag.Parse()
 
-	if len(flag.Args()) <= 0 {
-		err := InputError{"Must include an initial condition string of 1's and 0's"}
-		fmt.Println(err)
-		panic(err)
-	}
-
-	//initial conditions are a string of 1's and 0's
-	ic := flag.Args()[0]
-
 	flagOutCheck(flagOut)
 	flagLatCheck(flagLat)
 	flagGenCheck(flagGens)
 	flagIcCheck(*flagIc)
 
 	//generate state ca and work off of that
-	lattice := InitLattice(ic)
+	lattice := InitLattice(*flagIc)
 	for i := 1; i < *flagGens; i++ {
 		*lattice = append(*lattice, ParseRowToroid((*lattice)[0]))
 	}
@@ -148,7 +139,7 @@ func main() {
 	fmt.Println("-out: " + *flagOut)
 	fmt.Println("-lat: " + *flagLat)
 	fmt.Println("-gens" + strconv.Itoa(*flagGens))
-	fmt.Println("IC: " + flag.Args()[0])
+	fmt.Println("IC: " + *flagIc)
 	fmt.Println(time.Now())
 	fmt.Println(lattice)
 
