@@ -50,8 +50,8 @@ func flagGenCheck(gens *int) {
 	}
 }
 
-func InitLattice(size int, ic []string) *[][]string {
-	lattice := [][]string{}
+func InitLattice(ic string) *[]string {
+	lattice := []string{}
 
 	//apply initial condition
 	lattice = append(lattice, ic)
@@ -70,6 +70,12 @@ func main() {
 	flagGen := flag.Int("gens", 10, "sets number of generations to compute before stopping")
 	flag.Parse()
 
+	if len(flag.Args()) <= 0 {
+		err := InputError{"Must include an initial condition string of 1's and 0's"}
+		fmt.Println(err)
+		panic(err)
+	}
+
 	//initial conditions are a string of 1's and 0's
 	ic := flag.Args()[0]
 
@@ -79,6 +85,8 @@ func main() {
 	icCheck(ic)
 
 	//generate state ca and work off of that
+	lattice := InitLattice(ic)
+	//output
 
 	fmt.Println("Program Arguments")
 	fmt.Println("-out: " + *flagOut)
@@ -86,4 +94,6 @@ func main() {
 	fmt.Println("-gens" + strconv.Itoa(*flagGen))
 	fmt.Println("IC: " + flag.Args()[0])
 	fmt.Println(time.Now())
+	fmt.Println(lattice)
+
 }
