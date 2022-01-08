@@ -94,7 +94,14 @@ func main() {
 	//output
 	switch *flagOut {
 	case "b":
+		binlat := BinaryFilter(*lattice)
+		for i := 0; i < len(*binlat); i++ {
+			fmt.Println((*binlat)[i])
+		}
 	case "s":
+		for i := 0; i < len(*lattice); i++ {
+			fmt.Println((*lattice)[i])
+		}
 	case "d":
 	case "a":
 	}
@@ -106,9 +113,4 @@ func main() {
 	fmt.Println("IC: " + *flagIc)
 	fmt.Println(time.Now())
 
-	//fmt.Println(len(*lattice))
-	for i := 0; i < len(*lattice); i++ {
-		fmt.Println((*lattice)[i])
-		//fmt.Println("len: " + strconv.Itoa(len((*lattice)[i])))
-	}
 }
