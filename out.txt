@@ -1,0 +1,5 @@
+panic: (main.InputError) 0xc00011e2e0
+
+goroutine 1 [running]:
+main.main()
+	/home/michael/windows_stuff/Documents/Go/onetenparts/main.go:74 +0x6d4

@@ -103,6 +103,8 @@ func main() {
 			fmt.Println((*lattice)[i])
 		}
 	case "d":
+		//I have to figure out some algorithms to convert state
+		//data into domains and particles
 	case "a":
 	}
 
