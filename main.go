@@ -91,6 +91,8 @@ func main() {
 		}
 	}
 
+	history := make(map[int][]string)
+
 	//output
 	switch *flagOut {
 	case "b":
@@ -103,8 +105,21 @@ func main() {
 			fmt.Println((*lattice)[i])
 		}
 	case "d":
-		//I have to figure out some algorithms to convert state
-		//data into domains and particles
+		//get a collection of neighborhoods for each cell by state and time
+		//by making an array of maps, one spot for each cell by index that matches in lattice
+		//for each spot in map array: <lattice> index->[]string <neighbor history>
+
+		switch *flagLat {
+		case "t":
+			history = BuildToroidHist(lattice)
+		case "z":
+			history = BuildZeroHist(lattice)
+		case "o":
+			history = BuildOneHist(lattice)
+		case "u":
+			//BuildUnboundHist(lattice)
+		}
+
 	case "a":
 	}
 
@@ -114,5 +129,6 @@ func main() {
 	fmt.Println("-gens: " + strconv.Itoa(*flagGens))
 	fmt.Println("IC: " + *flagIc)
 	fmt.Println(time.Now())
+	fmt.Println(history)
 
 }

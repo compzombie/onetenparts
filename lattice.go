@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -53,6 +54,28 @@ func ParseRowToroid(row string) string {
 		out += strconv.Itoa(state)
 	}
 	return out
+}
+
+func BuildToroidHist(lattice *[]string) map[int][]string {
+	history := make(map[int][]string)
+	for iter := 1; iter < len(*lattice); iter++ { //i=1 because skip IC
+		for cell := 0; cell < len((*lattice)[iter]); cell++ {
+			//left, middle, and right indices of previous iter
+			l, m, r := cell-1, cell, cell+1
+
+			if l < 0 {
+				l = len((*lattice)[iter]) - 1
+			}
+
+			if r > len((*lattice)[iter])+1 {
+				r = 0
+			}
+
+			history[cell] = append(history[cell], fmt.Sprintf("%v%v%v", l, m, r))
+		}
+	}
+
+	return history
 }
 
 //zero-edged
@@ -115,6 +138,28 @@ func ParseRowZeroEdge(row string) string {
 	return out
 }
 
+func BuildZeroHist(lattice *[]string) map[int][]string {
+	history := make(map[int][]string)
+	for iter := 1; iter < len(*lattice); iter++ { //i=1 because skip IC
+		for cell := 0; cell < len((*lattice)[iter]); cell++ {
+			//left, middle, and right indices of previous iter
+			l, m, r := cell-1, cell, cell+1
+
+			if l < 0 {
+				l = 0
+			}
+
+			if r > len((*lattice)[iter])+1 {
+				r = 0
+			}
+
+			history[cell] = append(history[cell], fmt.Sprintf("%v%v%v", l, m, r))
+		}
+	}
+
+	return history
+}
+
 //one-edged
 func ParseRowOneEdge(row string) string {
 	out := ""
@@ -173,4 +218,26 @@ func ParseRowOneEdge(row string) string {
 	}
 
 	return out
+}
+
+func BuildOneHist(lattice *[]string) map[int][]string {
+	history := make(map[int][]string)
+	for iter := 1; iter < len(*lattice); iter++ { //i=1 because skip IC
+		for cell := 0; cell < len((*lattice)[iter]); cell++ {
+			//left, middle, and right indices of previous iter
+			l, m, r := cell-1, cell, cell+1
+
+			if l < 0 {
+				l = 1
+			}
+
+			if r > len((*lattice)[iter])+1 {
+				r = 1
+			}
+
+			history[cell] = append(history[cell], fmt.Sprintf("%v%v%v", l, m, r))
+		}
+	}
+
+	return history
 }
