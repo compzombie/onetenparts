@@ -5,9 +5,9 @@ function Cell(props) {
     const [cellState, setCellState] = useState(props.initState)
 
     return (
-        <div>
+        <>
             <TextField label={cellState} variant="outlined"/>
-        </div>
+        </>
     );
 }
 
