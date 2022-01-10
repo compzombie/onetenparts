@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import Grid from './components/Grid.js'
-import OptionsDrawer from './components/OptionsDrawer';
+import OptionsBar from './components/OptionsBar';
 
 function App() {
   return (
     <div className="App">
-      <OptionsDrawer />
+      <OptionsBar />
       <Grid />
     </div>
   );
