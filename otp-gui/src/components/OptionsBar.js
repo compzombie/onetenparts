@@ -10,44 +10,43 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
 import InputLabel from '@mui/material/InputLabel';
+
+import FileChooser from './FileChooser.js'
+
 
 
 function OptionsBar(props) {
 
     const [open, setOpen] = React.useState(false)
-    const handleDrawerOpen = () => {
-        setOpen(true)
+
+    const getFileName = () => {
+
+    }
+
+    const handleLoadFile = (e) => {
+
     };
+
+    /*
     const handleDrawerClose = () => {
         setOpen(false)
     };
+    */
 
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <input type="file" />
+                    <FileChooser />
+                    <Button variant="contained" onClick={handleLoadFile}>Load</Button> 
                     <InputLabel>Filter:</InputLabel>
-                        <Select >
+                        <Select defaultValue={0}>
                             <MenuItem value={0}>States</MenuItem>
                             <MenuItem value={1}>Binary</MenuItem>
                             <MenuItem value={2}>Domain</MenuItem>
                         </Select>
-                    {/* 
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={open}
-                        onChange={setOpen(!open)}
-                    >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                    */}
                 </Toolbar>
             </AppBar>
         </Box>
