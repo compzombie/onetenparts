@@ -84,15 +84,20 @@ func PngBinaryFilter(lattice *[]string) {
 			switch (*lattice)[y][x] {
 			case '0':
 				img.Set(x, y, color.White)
-
 			case '1':
 				img.Set(x, y, color.Black)
 			case '2':
+				img.Set(x, y, color.Black)
 			case '3':
+				img.Set(x, y, color.Black)
 			case '4':
+				img.Set(x, y, color.White)
 			case '5':
+				img.Set(x, y, color.Black)
 			case '6':
+				img.Set(x, y, color.Black)
 			case '7':
+				img.Set(x, y, color.White)
 			}
 		}
 	}
