@@ -1,3 +1,4 @@
 accesstoken.txt
 node_modules/
 otp-gui/package-lock.json
+.vscode/settings.json
