@@ -112,4 +112,41 @@ func PngBinaryFilter(lattice *[]string) {
 
 func PngStateFilter(lattice *[]string) {
 	//filename is timestamp + params
+	width := len((*lattice)[0])
+	height := len(*lattice)
+
+	upleft := image.Point{0, 0}
+	lowright := image.Point{width, height}
+
+	img := image.NewRGBA(image.Rectangle{upleft, lowright})
+
+	for x := 0; x < width; x++ {
+		for y := 0; y < height; y++ {
+			switch (*lattice)[y][x] {
+			case '0':
+				img.Set(x, y, color.White)
+			case '1':
+				img.Set(x, y, color.RGBA{255, 0, 0, 0xff})
+			case '2':
+				img.Set(x, y, color.RGBA{255, 127, 0, 0xff})
+			case '3':
+				img.Set(x, y, color.RGBA{255, 255, 0, 0xff})
+			case '4':
+				img.Set(x, y, color.RGBA{0, 255, 0, 0xff})
+			case '5':
+				img.Set(x, y, color.RGBA{0, 0, 255, 0xff})
+			case '6':
+				img.Set(x, y, color.RGBA{75, 0, 130, 0xff})
+			case '7':
+				img.Set(x, y, color.RGBA{148, 0, 211, 0xff})
+			}
+		}
+	}
+
+	name := "name.png"
+	f, err := os.Create(name)
+	if err != nil {
+		panic(err)
+	}
+	png.Encode(f, img)
 }
