@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"image"
+	"image/color"
+	"image/png"
+	"os"
 	"strconv"
 	"time"
 )
@@ -71,10 +74,35 @@ func PngBinaryFilter(lattice *[]string) {
 	width := len((*lattice)[0])
 	height := len(*lattice)
 
-	//origin point
-	orgpt := image.Point{0, 0}
-	//extreme point
-	extpt := image.Point{width, height}
+	upleft := image.Point{0, 0}
+	lowright := image.Point{width, height}
+
+	img := image.NewRGBA(image.Rectangle{upleft, lowright})
+
+	for x := 0; x < width; x++ {
+		for y := 0; y < height; y++ {
+			switch (*lattice)[y][x] {
+			case '0':
+				img.Set(x, y, color.White)
+
+			case '1':
+				img.Set(x, y, color.Black)
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			}
+		}
+	}
+
+	name := "name.png"
+	f, err := os.Create(name)
+	if err != nil {
+		panic(err)
+	}
+	png.Encode(f, img)
 }
 
 func PngStateFilter(lattice *[]string) {
