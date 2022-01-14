@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image"
 	"strconv"
 	"time"
 )
@@ -57,4 +58,25 @@ func PrintBinaryFilter(lattice *[]string) {
 	for i := 0; i < len(*binlat); i++ {
 		fmt.Println((*binlat)[i])
 	}
+}
+
+func PrintStateFilter(lattice *[]string) {
+	for i := 0; i < len(*lattice); i++ {
+		fmt.Println((*lattice)[i])
+	}
+}
+
+func PngBinaryFilter(lattice *[]string) {
+	//filename is timestamp + params
+	width := len((*lattice)[0])
+	height := len(*lattice)
+
+	//origin point
+	orgpt := image.Point{0, 0}
+	//extreme point
+	extpt := image.Point{width, height}
+}
+
+func PngStateFilter(lattice *[]string) {
+	//filename is timestamp + params
 }

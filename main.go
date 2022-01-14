@@ -98,33 +98,44 @@ func main() {
 	//text output
 	if *flagTxt {
 		PrintTimeStamp(flagOut, flagLat, flagGens, flagIc)
+
+		switch *flagOut {
+		case "b":
+			PrintBinaryFilter(lattice)
+
+		case "s":
+			PrintStateFilter(lattice)
+
+		case "d":
+			/*
+				//ALL OF THIS BELOW NEEDS TO GO SOMEWHERE ELSE LIKE PARSEDOMAIN()
+				//get a collection of neighborhoods for each cell by state and time
+				//by making an array of maps, one spot for each cell by index that matches in lattice
+				//for each spot in map array: <lattice> index->[]string <neighbor history>
+
+				switch *flagLat {
+				case "t":
+					//history = BuildToroidHist(lattice)
+				case "z":
+					//history = BuildZeroHist(lattice)
+				case "o":
+					//history = BuildOneHist(lattice)
+				case "u":
+					//BuildUnboundHist(lattice)
+				}
+			*/
+
+		case "a":
+		}
 	}
 
-	switch *flagOut {
-	case "b":
-		PrintBinaryFilter()
-
-	case "s":
-		for i := 0; i < len(*lattice); i++ {
-			fmt.Println((*lattice)[i])
+	if *flagPng {
+		switch *flagOut {
+		case "b":
+			PngBinaryFilter(lattice)
+		case "s":
+			PngStateFilter(lattice)
 		}
-	case "d":
-		//get a collection of neighborhoods for each cell by state and time
-		//by making an array of maps, one spot for each cell by index that matches in lattice
-		//for each spot in map array: <lattice> index->[]string <neighbor history>
-
-		switch *flagLat {
-		case "t":
-			//history = BuildToroidHist(lattice)
-		case "z":
-			//history = BuildZeroHist(lattice)
-		case "o":
-			//history = BuildOneHist(lattice)
-		case "u":
-			//BuildUnboundHist(lattice)
-		}
-
-	case "a":
 	}
 
 }
