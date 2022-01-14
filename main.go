@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"strconv"
-	"time"
 )
 
 func Rule110() []int {
@@ -54,6 +52,10 @@ func flagGenCheck(gens *int) {
 }
 
 func main() {
+	flagTxt := flag.Bool("txt", false, "output txt file")
+
+	flagPng := flag.Bool("png", true, "output png file")
+
 	//graph output - binary/state/domain/all
 	flagOut := flag.String("out", "b", "sets output parameters -(b)inary -(s)tate -(d)omain -(a)ll")
 
@@ -61,7 +63,7 @@ func main() {
 	flagLat := flag.String("lat", "t", "sets lattice properties -(t)oroidal -(z)ero-edged -(o)ne-edged -(u)nbounded -(a)ll")
 
 	//number of generations to compute
-	flagGens := flag.Int("gens", 10, "sets number of generations to compute before stopping")
+	flagGens := flag.Int("gens", 100, "sets number of generations to compute before stopping")
 
 	//initial condition of 1's and 0's
 	flagIc := flag.String("ic", "00000100000", "initial condition of ca")
@@ -91,15 +93,17 @@ func main() {
 		}
 	}
 
-	history := make(map[int][]string)
+	//history := make(map[int][]string)
 
-	//output
+	//text output
+	if *flagTxt {
+		PrintTimeStamp(flagOut, flagLat, flagGens, flagIc)
+	}
+
 	switch *flagOut {
 	case "b":
-		binlat := BinaryFilter(*lattice)
-		for i := 0; i < len(*binlat); i++ {
-			fmt.Println((*binlat)[i])
-		}
+		PrintBinaryFilter()
+
 	case "s":
 		for i := 0; i < len(*lattice); i++ {
 			fmt.Println((*lattice)[i])
@@ -111,24 +115,16 @@ func main() {
 
 		switch *flagLat {
 		case "t":
-			history = BuildToroidHist(lattice)
+			//history = BuildToroidHist(lattice)
 		case "z":
-			history = BuildZeroHist(lattice)
+			//history = BuildZeroHist(lattice)
 		case "o":
-			history = BuildOneHist(lattice)
+			//history = BuildOneHist(lattice)
 		case "u":
 			//BuildUnboundHist(lattice)
 		}
 
 	case "a":
 	}
-
-	fmt.Println("Program Arguments")
-	fmt.Println("-out: " + *flagOut)
-	fmt.Println("-lat: " + *flagLat)
-	fmt.Println("-gens: " + strconv.Itoa(*flagGens))
-	fmt.Println("IC: " + *flagIc)
-	fmt.Println(time.Now())
-	fmt.Println(history)
 
 }

@@ -1,5 +1,11 @@
 package main
 
+import (
+	"fmt"
+	"strconv"
+	"time"
+)
+
 func BinaryFilter(lattice []string) *[]string {
 	out := []string{}
 	for _, s := range lattice {
@@ -31,4 +37,24 @@ func BinaryFilter(lattice []string) *[]string {
 	}
 
 	return &out
+}
+
+func PrintTimeStamp(flagOut *string,
+	flagLat *string,
+	flagGens *int,
+	flagIc *string) {
+
+	fmt.Println("Program Arguments")
+	fmt.Println("-out: " + *flagOut)
+	fmt.Println("-lat: " + *flagLat)
+	fmt.Println("-gens: " + strconv.Itoa(*flagGens))
+	fmt.Println("IC: " + *flagIc)
+	fmt.Println(time.Now())
+}
+
+func PrintBinaryFilter(lattice *[]string) {
+	binlat := BinaryFilter(*lattice)
+	for i := 0; i < len(*binlat); i++ {
+		fmt.Println((*binlat)[i])
+	}
 }
