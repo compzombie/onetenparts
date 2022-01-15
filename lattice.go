@@ -14,44 +14,51 @@ func InitLattice(ic string) *[]string {
 	return &lattice
 }
 
+func GetCellState(index int, row string) int {
+	out, err := strconv.Atoi(string(row[index]))
+	if err != nil {
+		panic(err)
+	}
+
+	return out
+}
+
+func ComputeCellState(lefdex int, middex int, ritdex int) int {
+	return 4*Rule110()[lefdex] + 2*Rule110()[middex] + 1*Rule110()[ritdex]
+}
+
+func GetToroidNeighbors(index int, row string) (int, int, int) {
+	l, m, r := 0, 0, 0
+
+	if (index - 1) < 0 {
+		l = len(row) - 1
+	} else {
+		l = index - 1
+	}
+
+	m = index
+
+	if (index + 1) >= len(row) {
+		r = 0
+	} else {
+		r = index + 1
+	}
+
+	return l, m, r
+}
+
 //toroidal
 func ParseRowToroid(row string) string {
 	out := ""
 	for i := 0; i < len(row); i++ {
-		leftdex, middex, ritdex := -1, -1, -1
-
-		//toroid wrapping
-		if (i - 1) < 0 {
-			leftdex = len(row) - 1
-		} else {
-			leftdex = i - 1
-		}
-
-		middex = i
-
-		if (i + 1) >= len(row) {
-			ritdex = 0
-		} else {
-			ritdex = i + 1
-		}
+		leftdex, middex, ritdex := GetToroidNeighbors(i, row)
 
 		//state of each neighbor
-		lef, lerr := strconv.Atoi(string(row[leftdex]))
-		mid, merr := strconv.Atoi(string(row[middex]))
-		rit, rerr := strconv.Atoi(string(row[ritdex]))
-		if lerr != nil {
-			panic(lerr)
-		}
-		if merr != nil {
-			panic(merr)
-		}
-		if rerr != nil {
-			panic(rerr)
-		}
+		lef := GetCellState(leftdex, row)
+		mid := GetCellState(middex, row)
+		rit := GetCellState(ritdex, row)
 
-		state := 4*Rule110()[lef] + 2*Rule110()[mid] + 1*Rule110()[rit]
-
-		out += strconv.Itoa(state)
+		out += strconv.Itoa(ComputeCellState(lef, mid, rit))
 	}
 	return out
 }
