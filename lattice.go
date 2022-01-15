@@ -51,6 +51,48 @@ func GetToroidNeighbors(index int, row string) (int, int, int) {
 	return l, m, r
 }
 
+func GetZeroNeighbors(index int, row string) (int, int, int) {
+	l, m, r := 0, 0, 0
+
+	//edges are 0's
+	if (index - 1) < 0 {
+		l = 0
+	} else {
+		l = index - 1
+	}
+
+	m = index
+
+	if (index + 1) >= len(row) {
+		r = 0
+	} else {
+		r = index + 1
+	}
+
+	return l, m, r
+}
+
+func GetOneNeighbors(index int, row string) (int, int, int) {
+	l, m, r := 0, 0, 0
+
+	//edges are 0's
+	if (index - 1) < 0 {
+		l = 1
+	} else {
+		l = index - 1
+	}
+
+	m = index
+
+	if (index + 1) >= len(row) {
+		r = 1
+	} else {
+		r = index + 1
+	}
+
+	return l, m, r
+}
+
 //toroidal
 func ParseRowToroid(row string) string {
 	out := ""
