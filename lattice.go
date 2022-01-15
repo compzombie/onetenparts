@@ -5,6 +5,10 @@ import (
 	"strconv"
 )
 
+func Rule110() []int {
+	return []int{0, 1, 1, 1, 0, 1, 1, 0}
+}
+
 func InitLattice(ic string) *[]string {
 	lattice := []string{}
 

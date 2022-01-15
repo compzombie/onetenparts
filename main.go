@@ -5,10 +5,6 @@ import (
 	"fmt"
 )
 
-func Rule110() []int {
-	return []int{0, 1, 1, 1, 0, 1, 1, 0}
-}
-
 //flag can only consist of several distinct options
 func flagOutCheck(flagOut *string) {
 	//check submitted flags
