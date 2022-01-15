@@ -10,6 +10,13 @@ import (
 	"time"
 )
 
+func TimeStamp() string {
+	timestamp := time.Now()
+	hr, mn, sc := timestamp.Clock()
+	yr, mo, dy := timestamp.Date()
+	return fmt.Sprintf("otp-s%vm%vh%v-%v%v%v.png", sc, mn, hr, dy, mo, yr)
+}
+
 func BinaryFilter(lattice []string) *[]string {
 	out := []string{}
 	for _, s := range lattice {
@@ -70,9 +77,8 @@ func PrintStateFilter(lattice *[]string) {
 }
 
 func PngBinaryFilter(lattice *[]string) {
-	//filename is timestamp + params
-	width := len((*lattice)[0])
 	height := len(*lattice)
+	width := len((*lattice)[height-1])
 
 	upleft := image.Point{0, 0}
 	lowright := image.Point{width, height}
@@ -102,8 +108,7 @@ func PngBinaryFilter(lattice *[]string) {
 		}
 	}
 
-	name := "name.png"
-	f, err := os.Create(name)
+	f, err := os.Create(TimeStamp())
 	if err != nil {
 		panic(err)
 	}
@@ -111,9 +116,8 @@ func PngBinaryFilter(lattice *[]string) {
 }
 
 func PngStateFilter(lattice *[]string) {
-	//filename is timestamp + params
-	width := len((*lattice)[0])
 	height := len(*lattice)
+	width := len((*lattice)[height-1])
 
 	upleft := image.Point{0, 0}
 	lowright := image.Point{width, height}
@@ -143,8 +147,7 @@ func PngStateFilter(lattice *[]string) {
 		}
 	}
 
-	name := "name.png"
-	f, err := os.Create(name)
+	f, err := os.Create(TimeStamp())
 	if err != nil {
 		panic(err)
 	}
