@@ -4,11 +4,37 @@ import (
 	"flag"
 	"fmt"
 )
+//set flags for program
+func declareFlags() {
+	//TODO make this a path
+	flagTxt := flag.Bool("txt", false, "output path for a txt file")
+
+	//TODO make this a path
+	flagPng := flag.Bool("png", false, "output path for a png file")
+ 
+	//graph output - binary/state/domain/all
+	flagOut := flag.String("out", "b", "sets output parameters -(b)inary -(s)tate")
+
+	//lattice - toroidal, zero edged, 1 edged, unbounded
+	flagLat := flag.String("lat", "t", "sets lattice properties -(t)oroidal -(z)ero-edged -(o)ne-edged")
+
+	//number of generations to compute
+	flagGens := flag.Int("gens", 10, "sets number of generations to compute before stopping")
+
+	//initial condition of 1's and 0's
+	flagIc := flag.String("ic", "00000100000", "initial condition of ca")
+	flag.Parse()
+
+	flagOutCheck(flagOut)
+	flagLatCheck(flagLat)
+	flagGenCheck(flagGens)
+	flagIcCheck(*flagIc)
+}
 
 //flag can only consist of several distinct options
 func flagOutCheck(flagOut *string) {
 	//check submitted flags
-	if *flagOut != "b" && *flagOut != "s" && *flagOut != "d" && *flagOut != "a" {
+	if *flagOut != "b" && *flagOut != "s"{
 		err := InputError{"-out flag input malformed."}
 		fmt.Println(err)
 		panic(err)
@@ -18,7 +44,7 @@ func flagOutCheck(flagOut *string) {
 //flag can only consist of several distinct options
 func flagLatCheck(flagLat *string) {
 	//check submitted flags
-	if *flagLat != "t" && *flagLat != "z" && *flagLat != "o" && *flagLat != "u" && *flagLat != "a" {
+	if *flagLat != "t" && *flagLat != "z" && *flagLat != "o" {
 		err := InputError{"-lat flag input malformed."}
 		fmt.Println(*flagLat)
 		fmt.Println(err)
@@ -46,29 +72,11 @@ func flagGenCheck(gens *int) {
 		panic(err)
 	}
 }
-
+	
 func main() {
-	flagTxt := flag.Bool("txt", false, "output txt file")
+	declareFlags()
 
-	flagPng := flag.Bool("png", true, "output png file")
 
-	//graph output - binary/state/domain/all
-	flagOut := flag.String("out", "b", "sets output parameters -(b)inary -(s)tate -(d)omain -(a)ll")
-
-	//lattice - toroidal, zero edged, 1 edged, unbounded
-	flagLat := flag.String("lat", "t", "sets lattice properties -(t)oroidal -(z)ero-edged -(o)ne-edged -(u)nbounded -(a)ll")
-
-	//number of generations to compute
-	flagGens := flag.Int("gens", 100, "sets number of generations to compute before stopping")
-
-	//initial condition of 1's and 0's
-	flagIc := flag.String("ic", "00000100000", "initial condition of ca")
-	flag.Parse()
-
-	flagOutCheck(flagOut)
-	flagLatCheck(flagLat)
-	flagGenCheck(flagGens)
-	flagIcCheck(*flagIc)
 
 	//generate state ca and work off of that
 	lattice := InitLattice(*flagIc)
@@ -82,10 +90,6 @@ func main() {
 			*lattice = append(*lattice, ParseRowZeroEdge(prevRow))
 		case "o":
 			*lattice = append(*lattice, ParseRowOneEdge(prevRow))
-		case "u":
-		case "a":
-		default:
-			*lattice = append(*lattice, "-")
 		}
 	}
 
@@ -102,26 +106,6 @@ func main() {
 		case "s":
 			PrintStateFilter(lattice)
 
-		case "d":
-			/*
-				//ALL OF THIS BELOW NEEDS TO GO SOMEWHERE ELSE LIKE PARSEDOMAIN()
-				//get a collection of neighborhoods for each cell by state and time
-				//by making an array of maps, one spot for each cell by index that matches in lattice
-				//for each spot in map array: <lattice> index->[]string <neighbor history>
-
-				switch *flagLat {
-				case "t":
-					//history = BuildToroidHist(lattice)
-				case "z":
-					//history = BuildZeroHist(lattice)
-				case "o":
-					//history = BuildOneHist(lattice)
-				case "u":
-					//BuildUnboundHist(lattice)
-				}
-			*/
-
-		case "a":
 		}
 	}
 
